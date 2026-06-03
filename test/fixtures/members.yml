@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  first_name: MyString
+  last_name: MyString
+  phone: MyString
+  membership_expiry_date: 2026-06-03
+  emergency_contact_name: MyString
+  emergency_contact_number: MyString
+  number_of_dives: 1
+  last_dive_date: 2026-06-03
+  has_dive_certification: false
+
+two:
+  user: two
+  first_name: MyString
+  last_name: MyString
+  phone: MyString
+  membership_expiry_date: 2026-06-03
+  emergency_contact_name: MyString
+  emergency_contact_number: MyString
+  number_of_dives: 1
+  last_dive_date: 2026-06-03
+  has_dive_certification: false
