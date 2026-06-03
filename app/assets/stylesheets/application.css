@@ -10,46 +10,98 @@
  */
 
  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #121212;
-    color: white;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #0b4f86;
+  color: #333;
 }
 
-.top-banner {
-    background-color: #1e1e1e;
-    padding: 15px 30px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    border-bottom: 2px solid #333;
+.top-strip {
+  height: 38px;
+  background-color: #07172a;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 72px;
+  box-sizing: border-box;
 }
 
-.logo-section h1 {
-    margin: 0;
+.social-links {
+  display: flex;
+  gap: 10px;
+  font-weight: bold;
+  color: #d7dbe2;
 }
 
-.navbar a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
+.login-link a {
+  color: #d7dbe2;
+  text-decoration: none;
+  font-size: 15px;
 }
 
-.navbar a:hover {
-    color: #00bfff;
+.main-nav {
+  height: 125px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 72px;
+  box-sizing: border-box;
 }
 
-.page-content {
-    padding: 30px;
-    min-height: calc(100vh - 140px);
+.logo-box {
+  width: 190px;
+  display: flex;
+  align-items: center;
 }
 
-.footer {
-    background-color: #1e1e1e;
-    text-align: center;
-    padding: 15px;
+.site-logo {
+  max-height: 95px;
+  width: auto;
+}
 
-    border-top: 2px solid #333;
+.nav-links {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 34px;
+  align-items: center;
+}
+
+.nav-links a {
+  color: #4f5068;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: #0b7fc3;
+}
+
+main {
+  min-height: calc(100vh - 210px);
+  padding: 40px 72px;
+  box-sizing: border-box;
+}
+
+.site-footer {
+  background-color: #07172a;
+  color: #d7dbe2;
+  text-align: center;
+  padding: 18px;
+}
+
+.home-card {
+  background-color: white;
+  border-radius: 14px;
+  padding: 70px 30px;
+  text-align: center;
+}
+
+.home-card h1,
+.home-card h2 {
+  color: #1182c7;
+  font-size: 48px;
+  margin: 20px 0;
 }
