@@ -8,3 +8,48 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+ body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: white;
+}
+
+.top-banner {
+    background-color: #1e1e1e;
+    padding: 15px 30px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: 2px solid #333;
+}
+
+.logo-section h1 {
+    margin: 0;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.navbar a:hover {
+    color: #00bfff;
+}
+
+.page-content {
+    padding: 30px;
+    min-height: calc(100vh - 140px);
+}
+
+.footer {
+    background-color: #1e1e1e;
+    text-align: center;
+    padding: 15px;
+
+    border-top: 2px solid #333;
+}
