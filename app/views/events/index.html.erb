@@ -1,0 +1,47 @@
+<h1>Upcoming Events</h1>
+
+<p>
+  <%= link_to "Create Event", new_event_path %>
+</p>
+
+<% if @events.any? %>
+  <% @events.each do |event| %>
+    <hr>
+
+    <h2>
+      <%= link_to event.title, event_path(event) %>
+    </h2>
+
+    <p>
+      <strong>Start:</strong>
+      <%= event.start_datetime.strftime("%A, %d %B %Y %I:%M %p") %>
+    </p>
+
+    <p>
+      <strong>End:</strong>
+      <%= event.end_datetime.strftime("%A, %d %B %Y %I:%M %p") %>
+    </p>
+
+    <p>
+      <strong>Meeting point:</strong>
+      <%= event.meeting_point.presence || "TBC" %>
+    </p>
+
+    <p>
+      <strong>Location:</strong>
+      <%= event.location.presence || "TBC" %>
+    </p>
+
+    <% if session[:user_id] %>
+      <p>
+        <button disabled>Register button coming soon</button>
+      </p>
+    <% else %>
+      <p>
+        <%= link_to "Login to register", login_path %>
+      </p>
+    <% end %>
+  <% end %>
+<% else %>
+  <p>No upcoming events yet.</p>
+<% end %>

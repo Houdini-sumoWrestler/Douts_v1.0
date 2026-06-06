@@ -1,0 +1,70 @@
+<h1>DOUTS Dashboard</h1>
+
+<p>Welcome to your dashboard.</p>
+
+<h2>Your Account</h2>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Role:</strong>
+  <%= @user.role %>
+</p>
+
+<h2>Your Member Details</h2>
+
+<% if @member %>
+  <p>
+    <strong>Name:</strong>
+    <%= @member.first_name %> <%= @member.last_name %>
+  </p>
+
+  <p>
+    <strong>Phone:</strong>
+    <%= @member.phone || "Not provided yet" %>
+  </p>
+
+  <p>
+    <strong>Membership expiry:</strong>
+    <%= @member.membership_expiry_date || "Not set yet" %>
+  </p>
+<% else %>
+  <p>No member profile found.</p>
+<% end %>
+
+<h2>Member Tools</h2>
+
+<p>
+  <%= link_to "View events", "#" %>
+</p>
+
+<p>
+  <%= link_to "Update my details", "#" %>
+</p>
+
+<% if @user.admin? %>
+  <h2>Admin Tools</h2>
+
+  <p>
+    <%= link_to "Admin Dashboard", admin_path %>
+  </p>
+
+  <p>
+    <%= link_to "Manage members", "#" %>
+  </p>
+
+  <p>
+    <%= link_to "Manage events", "#" %>
+  </p>
+
+  <p>
+    <%= link_to "Manage payments", "#" %>
+  </p>
+<% end %>
+
+<p>
+  <%= link_to "Back to Home", root_path %>
+</p>
