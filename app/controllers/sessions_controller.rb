@@ -3,15 +3,13 @@ class SessionsController < ApplicationController
   end
 
   def create
-    email = params[:email]
-    password = params[:password]
+    user = User.find_by(email: params[:email])
 
-    # Placeholder login logic for now
-    if email.present? && password.present?
-      session[:user_email] = email
+    if user&.authenticate(params[:password])
+      session[:user_id] = user.id
       redirect_to root_path, notice: "Logged in successfully"
     else
-      flash.now[:alert] = "Email and password are required"
+      flash.now[:alert] = "Invalid email or password"
       render :new, status: :unprocessable_entity
     end
   end

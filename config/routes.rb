@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "admin/dashboard"
   get "users/new"
   get "users/create"
   root "pages#home"
@@ -11,6 +12,8 @@ Rails.application.routes.draw do
 
   get  "/register", to: "users#new"
   post "/register", to: "users#create"
+
+  get "/admin", to: "admin#dashboard"
 
   get "up" => "rails/health#show", as: :rails_health_check
 end
