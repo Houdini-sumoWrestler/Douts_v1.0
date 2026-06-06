@@ -1,2 +1,64 @@
-<h1>Events#show</h1>
-<p>Find me in app/views/events/show.html.erb</p>
+<h1><%= @event.title %></h1>
+
+<p>
+  <strong>Description:</strong><br>
+  <%= @event.description %>
+</p>
+
+<p>
+  <strong>Start:</strong>
+  <%= @event.start_datetime %>
+</p>
+
+<p>
+  <strong>End:</strong>
+  <%= @event.end_datetime %>
+</p>
+
+<p>
+  <strong>Meeting Point:</strong>
+  <%= @event.meeting_point %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @event.location %>
+</p>
+
+<p>
+  <strong>Capacity:</strong>
+  <%= @event.capacity %>
+</p>
+
+<h2>Registration</h2>
+
+<% if session[:user_id] %>
+  <% current_user = User.find_by(id: session[:user_id]) %>
+  <% current_member = current_user&.member %>
+
+  <% if current_member %>
+    <% registration = @event.event_registrations.find_by(member: current_member) %>
+
+    <% if registration %>
+      <p>You are registered for this event.</p>
+
+      <%= button_to "Cancel Registration",
+          event_registration_path(registration),
+          method: :delete %>
+    <% else %>
+      <%= button_to "Register for Event",
+          event_event_registrations_path(@event),
+          method: :post %>
+    <% end %>
+  <% else %>
+    <p>You need a member profile before registering.</p>
+  <% end %>
+<% else %>
+  <p>
+    <%= link_to "Login to register", login_path %>
+  </p>
+<% end %>
+
+<p>
+  <%= link_to "Back to Events", events_path %>
+</p>

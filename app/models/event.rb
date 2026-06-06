@@ -1,4 +1,7 @@
 class Event < ApplicationRecord
+  has_many :event_registrations, dependent: :destroy
+  has_many :members, through: :event_registrations
+
   validates :title, presence: true
   validates :start_datetime, presence: true
   validates :end_datetime, presence: true

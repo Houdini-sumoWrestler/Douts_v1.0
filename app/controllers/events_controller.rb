@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   def index
-    @events = Event.where("start_datetime >= ?", Time.current).order(:start_datetime)
+    @events = Event.order(:start_datetime)
   end
 
   def show

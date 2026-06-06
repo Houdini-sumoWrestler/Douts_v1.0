@@ -1,47 +1,66 @@
-<h1>Upcoming Events</h1>
+<h1>Events</h1>
 
 <p>
   <%= link_to "Create Event", new_event_path %>
 </p>
 
 <% if @events.any? %>
-  <% @events.each do |event| %>
-    <hr>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Event</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Meeting Point</th>
+        <th>Location</th>
+        <th>Capacity</th>
+        <th>Registrations</th>
+        <th>Action</th>
+      </tr>
+    </thead>
 
-    <h2>
-      <%= link_to event.title, event_path(event) %>
-    </h2>
+    <tbody>
+      <% @events.each do |event| %>
+        <tr>
+          <td>
+            <%= link_to event.title, event_path(event) %>
+          </td>
 
-    <p>
-      <strong>Start:</strong>
-      <%= event.start_datetime.strftime("%A, %d %B %Y %I:%M %p") %>
-    </p>
+          <td>
+            <%= event.start_datetime&.strftime("%d %b %Y, %I:%M %p") %>
+          </td>
 
-    <p>
-      <strong>End:</strong>
-      <%= event.end_datetime.strftime("%A, %d %B %Y %I:%M %p") %>
-    </p>
+          <td>
+            <%= event.end_datetime&.strftime("%d %b %Y, %I:%M %p") %>
+          </td>
 
-    <p>
-      <strong>Meeting point:</strong>
-      <%= event.meeting_point.presence || "TBC" %>
-    </p>
+          <td>
+            <%= event.meeting_point.presence || "TBC" %>
+          </td>
 
-    <p>
-      <strong>Location:</strong>
-      <%= event.location.presence || "TBC" %>
-    </p>
+          <td>
+            <%= event.location.presence || "TBC" %>
+          </td>
 
-    <% if session[:user_id] %>
-      <p>
-        <button disabled>Register button coming soon</button>
-      </p>
-    <% else %>
-      <p>
-        <%= link_to "Login to register", login_path %>
-      </p>
-    <% end %>
-  <% end %>
+          <td>
+            <%= event.capacity.presence || "No limit" %>
+          </td>
+
+          <td>
+            <%= event.event_registrations.count %>
+          </td>
+
+          <td>
+            <% if session[:user_id] %>
+              <%= link_to "View / Register", event_path(event) %>
+            <% else %>
+              <%= link_to "Login to register", login_path %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% else %>
-  <p>No upcoming events yet.</p>
+  <p>No events have been created yet.</p>
 <% end %>

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "event_registrations/create"
+  get "event_registrations/destroy"
   get "events/index"
   get "events/show"
   get "events/new"
@@ -22,6 +24,12 @@ Rails.application.routes.draw do
   post "/register", to: "users#create"
 
   resources :events, only: [:index, :show, :new, :create]
+
+  resources :events, only: [:index, :show, :new, :create] do
+    resources :event_registrations, only: [:create]
+  end
+
+  resources :event_registrations, only: [:destroy]
 
   get "/admin", to: "admin#dashboard"
 

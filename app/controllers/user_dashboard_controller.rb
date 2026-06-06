@@ -13,4 +13,5 @@ class UserDashboardController < ApplicationController
       redirect_to login_path, alert: "Please log in first."
     end
   end
+
 end
