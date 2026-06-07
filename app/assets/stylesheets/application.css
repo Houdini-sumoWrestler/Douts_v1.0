@@ -1,28 +1,54 @@
 /*
  * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
  */
 
- body {
+/* ======================
+   Base layout
+   ====================== */
+
+body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #0b4f86;
-  color: #333;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  color: #1f2937;
+}
+
+main {
+  min-height: calc(100vh - 210px);
+  box-sizing: border-box;
+}
+
+.page-content {
+  height: calc(100vh - 163px);
+  overflow-y: auto;
+
+  background-image: url("douts_background.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* ======================
+   Header
+   ====================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .top-strip {
   height: 38px;
   background-color: #07172a;
   color: white;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   padding: 0 72px;
   box-sizing: border-box;
 }
@@ -40,37 +66,75 @@
   font-size: 15px;
 }
 
+/* ======================
+   Main navigation
+   ====================== */
+
 .main-nav {
   height: 125px;
-  background-color: white;
+  width: 100%;
+
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+
   display: flex;
   align-items: center;
+
   padding: 0 72px;
   box-sizing: border-box;
 }
 
-.logo-box {
-  width: 190px;
+.nav-inner {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+
   display: flex;
   align-items: center;
+  gap: 40px;
+}
+
+.logo-box {
+  width: 190px;
+  margin-right: 40px;
+
+  display: flex;
+  align-items: center;
+}
+
+.logo-box a {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.logo-box a img {
+  display: block;
 }
 
 .site-logo {
   max-height: 95px;
   width: auto;
+
+  transition: transform 0.2s ease;
+}
+
+.site-logo:hover {
+  transform: scale(1.03);
 }
 
 .nav-links {
   flex: 1;
+
   display: flex;
   justify-content: center;
-  gap: 34px;
   align-items: center;
+  gap: 34px;
 }
 
 .nav-links a {
   color: #4f5068;
   text-decoration: none;
+
   font-size: 16px;
   font-weight: 500;
 }
@@ -79,18 +143,83 @@
   color: #0b7fc3;
 }
 
-main {
-  min-height: calc(100vh - 210px);
-  padding: 40px 72px;
-  box-sizing: border-box;
+/* ======================
+   Dropdown menus
+   ====================== */
+
+.dropdown {
+  position: relative;
+
+  display: flex;
+  align-items: center;
 }
 
-.site-footer {
-  background-color: #07172a;
-  color: #d7dbe2;
-  text-align: center;
-  padding: 18px;
+.dropdown > a {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
 }
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+
+  min-width: 230px;
+
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(10px);
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.15),
+    0 3px 8px rgba(0, 0, 0, 0.08);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s ease;
+
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu a {
+  display: block;
+
+  padding: 16px 22px;
+
+  color: #4f5068;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    padding-left 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  background: rgba(11, 127, 195, 0.08);
+  color: #0b7fc3;
+  padding-left: 28px;
+}
+
+/* ======================
+   Home / welcome page
+   ====================== */
 
 .home-card {
   background-color: white;
@@ -104,4 +233,150 @@ main {
   color: #1182c7;
   font-size: 48px;
   margin: 20px 0;
+}
+
+.welcome-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px;
+
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+}
+
+.welcome-container h1 {
+  margin-top: 0;
+}
+
+.home-actions {
+  margin-top: 30px;
+}
+
+.home-button {
+  display: inline-block;
+
+  margin-right: 12px;
+  margin-bottom: 12px;
+  padding: 10px 16px;
+
+  border: 1px solid #333;
+  text-decoration: none;
+  background: white;
+}
+
+.welcome-hero {
+  max-width: 1100px;
+
+  margin: 32px auto;
+  padding: 60px 32px;
+
+  background: rgba(7, 23, 42, 0.65);
+  backdrop-filter: blur(3px);
+
+  color: white;
+
+  border-radius: 18px;
+}
+
+.welcome-hero h1 {
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -2px;
+  margin-bottom: 12px;
+}
+
+.welcome-subtitle {
+  font-size: 22px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.welcome-hero p {
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.welcome-section {
+  max-width: 1100px;
+  margin: 0 auto 28px;
+  padding: 0 20px;
+}
+
+.welcome-section h2 {
+  color: white;
+  margin-bottom: 16px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.dashboard-card,
+.welcome-panel {
+  background: rgba(255, 255, 255, 0.94);
+
+  border-radius: 14px;
+  padding: 24px;
+
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.16);
+}
+
+.dashboard-card h3,
+.welcome-panel h2 {
+  margin-top: 0;
+  color: #07172a;
+}
+
+.dashboard-card p,
+.welcome-panel p {
+  line-height: 1.5;
+}
+
+.welcome-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.muted-text {
+  color: #666;
+  font-style: italic;
+}
+
+/* ======================
+   Footer
+   ====================== */
+
+.site-footer {
+  background-color: #07172a;
+  color: #d7dbe2;
+
+  text-align: center;
+  padding: 18px;
+}
+
+/* ======================
+   Responsive
+   ====================== */
+
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .welcome-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome-hero h1 {
+    font-size: 32px;
+  }
 }

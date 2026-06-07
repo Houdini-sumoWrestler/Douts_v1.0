@@ -1,25 +1,62 @@
-<h1>Welcome to DOUTS</h1>
+<div class="home-background">
 
-<% if session[:user_id] %>
-  <% user = User.find_by(id: session[:user_id]) %>
+  <section class="welcome-hero">
+    <div class="welcome-hero-content">
+      <h1>Welcome to DOUTS</h1>
+      <p class="welcome-subtitle">
+        Diving Organisation of the University of Technology Sydney
+      </p>
+      <p>
+        DOUTS is a student-run club for scuba diving, outdoor adventure, training,
+        and building a safe, friendly diving community.
+      </p>
+    </div>
+  </section>
 
-  <p>You are logged in as <%= user.email %>.</p>
+  <section class="welcome-section">
+    <h2>What can I do here?</h2>
 
-  <% if user.admin? %>
-    <p>
-      <%= link_to "Admin Dashboard", admin_path %>
-    </p>
-  <% end %>
+    <div class="dashboard-grid">
+      <div class="dashboard-card">
+        <h3>Events</h3>
+        <p>Browse upcoming dives, social events, training activities, and club meetings.</p>
+      </div>
 
-  <p>
-    <%= button_to "Logout", logout_path, method: :delete %>
-  </p>
-<% else %>
-  <p>
-    <%= link_to "Login", login_path %>
-  </p>
+      <div class="dashboard-card">
+        <h3>My Membership</h3>
+        <p>View your membership details, certifications, dive history, and contact information.</p>
+      </div>
 
-  <p>
-    <%= link_to "Join DOUTS", register_path %>
-  </p>
-<% end %>
+      <div class="dashboard-card">
+        <h3>Equipment & Assets</h3>
+        <p>Check availability and manage bookings for club equipment and approved activities.</p>
+      </div>
+
+      <div class="dashboard-card">
+        <h3>Safety</h3>
+        <p>Keep your diving information up to date and review club safety expectations.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="welcome-section welcome-columns">
+    <div class="welcome-panel">
+      <h2>Upcoming Events</h2>
+      <p class="muted-text">Coming soon.</p>
+      <p>
+        Future versions of this page will show upcoming dives, trips, meetings,
+        and social events here.
+      </p>
+    </div>
+
+    <div class="welcome-panel">
+      <h2>Club News</h2>
+      <p class="muted-text">Coming soon.</p>
+      <p>
+        Announcements, trip reports, committee updates, and important notices will
+        appear here.
+      </p>
+    </div>
+  </section>
+
+</div>
