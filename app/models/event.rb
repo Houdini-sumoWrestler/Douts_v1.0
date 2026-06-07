@@ -1,4 +1,7 @@
 class Event < ApplicationRecord
+  has_many :event_assets, dependent: :destroy
+  has_many :assets, through: :event_assets  
+  
   has_many :event_registrations, dependent: :destroy
   has_many :members, through: :event_registrations
 

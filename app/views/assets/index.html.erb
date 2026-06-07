@@ -1,0 +1,37 @@
+<h1>Assets Register</h1>
+
+<% current_user = User.find_by(id: session[:user_id]) %>
+
+<% if current_user&.admin? %>
+  <p>
+    <%= link_to "Add Asset", new_asset_path %>
+  </p>
+<% end %>
+
+<% if @assets.any? %>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Quantity</th>
+        <th>Description</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @assets.each do |asset| %>
+        <tr>
+          <td><%= asset.name %></td>
+          <td><%= asset.category.presence || "Uncategorised" %></td>
+          <td><%= asset.quantity %></td>
+          <td><%= asset.description.presence || "-" %></td>
+          <td><%= link_to "View", asset_path(asset) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No assets have been added yet.</p>
+<% end %>

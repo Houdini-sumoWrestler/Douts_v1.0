@@ -59,6 +59,81 @@
   </p>
 <% end %>
 
+<h2>Assets Available for This Event</h2>
+
+<% if @event.event_assets.any? %>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Asset</th>
+        <th>Quantity Available</th>
+        <th>Price</th>
+        <% if User.find_by(id: session[:user_id])&.admin? %>
+          <th>Action</th>
+        <% end %>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @event.event_assets.each do |event_asset| %>
+        <tr>
+          <td><%= event_asset.asset.name %></td>
+          <td><%= event_asset.quantity_available %></td>
+          <td>
+            <% if event_asset.price.present? %>
+              $<%= event_asset.price %>
+            <% else %>
+              Free
+            <% end %>
+          </td>
+
+          <% if User.find_by(id: session[:user_id])&.admin? %>
+            <td>
+              <%= button_to "Remove",
+                  event_asset_path(event_asset),
+                  method: :delete %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No assets have been added to this event yet.</p>
+<% end %>
+
+<% current_user = User.find_by(id: session[:user_id]) %>
+
+<% if current_user&.admin? %>
+  <h3>Add Asset to Event</h3>
+
+  <%= form_with url: event_event_assets_path(@event), method: :post, local: true do %>
+    <div>
+      <%= label_tag :asset_id, "Asset" %><br>
+      <%= select_tag :asset_id,
+          options_from_collection_for_select(Asset.order(:name), :id, :name) %>
+    </div>
+
+    <br>
+
+    <div>
+      <%= label_tag :quantity_available, "Quantity available for this event" %><br>
+      <%= number_field_tag :quantity_available, nil, min: 0 %>
+    </div>
+
+    <br>
+
+    <div>
+      <%= label_tag :price, "Price for this event" %><br>
+      <%= number_field_tag :price, nil, min: 0, step: 0.01 %>
+    </div>
+
+    <br>
+
+    <%= submit_tag "Add Asset" %>
+  <% end %>
+<% end %>
+
 <p>
   <%= link_to "Back to Events", events_path %>
 </p>

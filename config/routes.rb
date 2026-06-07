@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "event_assets/create"
+  get "event_assets/destroy"
+
   get "event_registrations/create"
   get "event_registrations/destroy"
   get "events/index"
@@ -30,6 +33,14 @@ Rails.application.routes.draw do
   end
 
   resources :event_registrations, only: [:destroy]
+
+  resources :assets, path: "asset-register", only: [:index, :show, :new, :create]
+
+  resources :events, only: [:index, :show, :new, :create] do
+    resources :event_assets, only: [:create]
+  end
+
+resources :event_assets, only: [:destroy]
 
   get "/admin", to: "admin#dashboard"
 
