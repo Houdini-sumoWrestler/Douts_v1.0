@@ -44,8 +44,6 @@
             <% end %>
           </div>
 
-    <div class="nav-links">
-
         <div class="nav-links">
           <%= link_to "Home", root_path %>
 
@@ -113,14 +111,6 @@
         </div>
       </nav>
     </header>
-
-    <% if flash[:notice] %>
-      <p><%= flash[:notice] %></p>
-    <% end %>
-
-    <% if flash[:alert] %>
-      <p><%= flash[:alert] %></p>
-    <% end %>
 
     <main class="page-content">
       <%= yield %>

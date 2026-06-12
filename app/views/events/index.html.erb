@@ -1,66 +1,75 @@
-<h1>Events</h1>
+<div class="events-container">
+  <div class="events-card">
 
-<p>
-  <%= link_to "Create Event", new_event_path %>
-</p>
+    <div class="events-header">
+      <h1>Events</h1>
 
-<% if @events.any? %>
-  <table border="1">
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Start</th>
-        <th>End</th>
-        <th>Meeting Point</th>
-        <th>Location</th>
-        <th>Capacity</th>
-        <th>Registrations</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @events.each do |event| %>
-        <tr>
-          <td>
-            <%= link_to event.title, event_path(event) %>
-          </td>
-
-          <td>
-            <%= event.start_datetime&.strftime("%d %b %Y, %I:%M %p") %>
-          </td>
-
-          <td>
-            <%= event.end_datetime&.strftime("%d %b %Y, %I:%M %p") %>
-          </td>
-
-          <td>
-            <%= event.meeting_point.presence || "TBC" %>
-          </td>
-
-          <td>
-            <%= event.location.presence || "TBC" %>
-          </td>
-
-          <td>
-            <%= event.capacity.presence || "No limit" %>
-          </td>
-
-          <td>
-            <%= event.event_registrations.count %>
-          </td>
-
-          <td>
-            <% if session[:user_id] %>
-              <%= link_to "View / Register", event_path(event) %>
-            <% else %>
-              <%= link_to "Login to register", login_path %>
-            <% end %>
-          </td>
-        </tr>
+      <% if User.find_by(id: session[:user_id])&.admin? %>
+        <%= link_to "Create Event", new_event_path, class: "primary-link-button" %>
       <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <p>No events have been created yet.</p>
-<% end %>
+    </div>
+
+    <div class="events-layout">
+
+      <section class="events-calendar-panel">
+        
+
+        <div class="calendar-header">
+            <%= link_to "‹", events_path(month: (@calendar_date - 1.month).strftime("%Y-%m-01")), class: "calendar-nav" %>
+
+            <h2><%= @calendar_date.strftime("%B %Y") %></h2>
+
+            <%= link_to "›", events_path(month: (@calendar_date + 1.month).strftime("%Y-%m-01")), class: "calendar-nav" %>
+            </div>
+
+            <div class="calendar-grid">
+            <% %w[Mon Tue Wed Thu Fri Sat Sun].each do |day| %>
+                <div class="calendar-day-name"><%= day %></div>
+            <% end %>
+
+            <% (@start_date..@end_date).each do |date| %>
+                <div class="calendar-day <%= 'outside-month' if date.month != @calendar_date.month %>">
+                <div class="calendar-date-number"><%= date.day %></div>
+
+                <% (@calendar_events[date] || []).each do |event| %>
+                    <%= link_to event.title,
+                        event_path(event),
+                        class: "calendar-event" %>
+                <% end %>
+                </div>
+            <% end %>
+            </div>
+      </section>
+
+      <section class="events-list-panel">
+        <h2>Upcoming Events</h2>
+
+        <% if @events.any? %>
+          <div class="event-list">
+            <% @events.each do |event| %>
+              <div class="event-summary-card">
+                <h3><%= link_to event.title, event_path(event) %></h3>
+
+                <p>
+                  <strong>Start:</strong><br>
+                  <%= event.start_datetime&.strftime("%d %b %Y, %I:%M %p") %>
+                </p>
+
+                <p>
+                  <strong>Location:</strong><br>
+                  <%= event.location.presence || "TBC" %>
+                </p>
+
+                <%= link_to "View Event", event_path(event), class: "primary-link-button" %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p>No events have been created yet.</p>
+        <% end %>
+      </section>
+
+    </div>
+
+  </div>
+</div>

@@ -1,59 +1,54 @@
-<h1>DOUTS Login</h1>
+<div class="login-container">
+  <div class="login-card">
 
-<% if flash[:alert] %>
-  <p><%= flash[:alert] %></p>
-<% end %>
+    <h1>DOUTS Login</h1>
 
-<% if flash[:notice] %>
-  <p><%= flash[:notice] %></p>
-<% end %>
+    <% if flash[:alert] %>
+      <div class="flash-alert"><%= flash[:alert] %></div>
+    <% end %>
 
-<%= form_with url: login_path, method: :post, local: true, id: "login-form" do %>
-  <div>
-    <%= label_tag :email, "Email" %><br>
-    <%= email_field_tag :email, nil, id: "email" %>
+    <% if flash[:notice] %>
+      <div class="flash-notice"><%= flash[:notice] %></div>
+    <% end %>
+
+    <%= form_with url: login_path,
+                  method: :post,
+                  local: true,
+                  id: "login-form",
+                  data: {
+                    controller: "login",
+                    action: "submit->login#validate"
+                  } do %>
+
+      <div class="form-group">
+        <%= label_tag :email, "Email" %>
+        <%= email_field_tag :email, nil,
+              id: "email",
+              class: "form-input",
+              data: { login_target: "email" } %>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag :password, "Password" %>
+        <%= password_field_tag :password, nil,
+              id: "password",
+              class: "form-input",
+              data: { login_target: "password" } %>
+      </div>
+
+      <div class="show-password">
+        <input type="checkbox"
+               id="show-password"
+               data-action="change->login#togglePassword">
+
+        <label for="show-password">Show password</label>
+      </div>
+
+      <p id="login-error" data-login-target="error"></p>
+
+      <%= submit_tag "Login", class: "login-button" %>
+
+    <% end %>
+
   </div>
-
-  <br>
-
-  <div>
-    <%= label_tag :password, "Password" %><br>
-    <%= password_field_tag :password, nil, id: "password" %>
-  </div>
-
-  <br>
-
-  <div>
-    <input type="checkbox" id="show-password">
-    <label for="show-password">Show password</label>
-  </div>
-
-  <br>
-
-  <p id="login-error"></p>
-
-  <%= submit_tag "Login" %>
-<% end %>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("login-form");
-    const email = document.getElementById("email");
-    const password = document.getElementById("password");
-    const error = document.getElementById("login-error");
-    const showPassword = document.getElementById("show-password");
-
-    showPassword.addEventListener("change", function () {
-      password.type = this.checked ? "text" : "password";
-    });
-
-    form.addEventListener("submit", function (event) {
-      error.textContent = "";
-
-      if (email.value.trim() === "" || password.value.trim() === "") {
-        event.preventDefault();
-        error.textContent = "Please enter both email and password.";
-      }
-    });
-  });
-</script>
+</div>

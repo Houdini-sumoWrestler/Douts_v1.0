@@ -1,70 +1,50 @@
-<h1>DOUTS Dashboard</h1>
+<div class="dashboard-container">
+  <div class="user-dashboard-card">
+    <h1>DOUTS Dashboard</h1>
 
-<p>Welcome to your dashboard.</p>
+    <p class="dashboard-intro">Welcome to your dashboard.</p>
 
-<h2>Your Account</h2>
+    <section class="dashboard-section">
+      <h2>Your Account</h2>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+      <p><strong>Email:</strong> <%= @user.email %></p>
+      <p><strong>Role:</strong> <%= @user.role %></p>
+    </section>
 
-<p>
-  <strong>Role:</strong>
-  <%= @user.role %>
-</p>
+    <section class="dashboard-section">
+      <h2>Your Member Details</h2>
 
-<h2>Your Member Details</h2>
+      <% if @member %>
+        <p><strong>Name:</strong> <%= @member.first_name %> <%= @member.last_name %></p>
+        <p><strong>Phone:</strong> <%= @member.phone || "Not provided yet" %></p>
+        <p><strong>Membership expiry:</strong> <%= @member.membership_expiry_date || "Not set yet" %></p>
+      <% else %>
+        <p>No member profile found.</p>
+      <% end %>
+    </section>
 
-<% if @member %>
-  <p>
-    <strong>Name:</strong>
-    <%= @member.first_name %> <%= @member.last_name %>
-  </p>
+    <section class="dashboard-section">
+      <h2>Member Tools</h2>
 
-  <p>
-    <strong>Phone:</strong>
-    <%= @member.phone || "Not provided yet" %>
-  </p>
+      <div class="dashboard-actions">
+        <%= link_to "View events", "#", class: "dashboard-button" %>
+        <%= link_to "Update my details", "#", class: "dashboard-button" %>
+      </div>
+    </section>
 
-  <p>
-    <strong>Membership expiry:</strong>
-    <%= @member.membership_expiry_date || "Not set yet" %>
-  </p>
-<% else %>
-  <p>No member profile found.</p>
-<% end %>
+    <% if @user.admin? %>
+      <section class="dashboard-section">
+        <h2>Admin Tools</h2>
 
-<h2>Member Tools</h2>
+        <div class="dashboard-actions">
+          <%= link_to "Admin Dashboard", admin_path, class: "dashboard-button admin-button" %>
+          <%= link_to "Manage members", "#", class: "dashboard-button admin-button" %>
+          <%= link_to "Manage events", "#", class: "dashboard-button admin-button" %>
+          <%= link_to "Manage payments", "#", class: "dashboard-button admin-button" %>
+        </div>
+      </section>
+    <% end %>
 
-<p>
-  <%= link_to "View events", "#" %>
-</p>
-
-<p>
-  <%= link_to "Update my details", "#" %>
-</p>
-
-<% if @user.admin? %>
-  <h2>Admin Tools</h2>
-
-  <p>
-    <%= link_to "Admin Dashboard", admin_path %>
-  </p>
-
-  <p>
-    <%= link_to "Manage members", "#" %>
-  </p>
-
-  <p>
-    <%= link_to "Manage events", "#" %>
-  </p>
-
-  <p>
-    <%= link_to "Manage payments", "#" %>
-  </p>
-<% end %>
-
-<p>
-  <%= link_to "Back to Home", root_path %>
-</p>
+    <%= link_to "Back to Home", root_path, class: "back-link" %>
+  </div>
+</div>

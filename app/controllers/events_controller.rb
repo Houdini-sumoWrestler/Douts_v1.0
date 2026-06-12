@@ -1,6 +1,21 @@
 class EventsController < ApplicationController
   def index
     @events = Event.order(:start_datetime)
+
+    @calendar_date =
+      if params[:month].present?
+        Date.parse(params[:month])
+      else
+        Date.today
+      end
+
+    @start_date = @calendar_date.beginning_of_month.beginning_of_week(:monday)
+    @end_date = @calendar_date.end_of_month.end_of_week(:monday)
+
+    @calendar_events = Event
+      .where(start_datetime: @start_date.beginning_of_day..@end_date.end_of_day)
+      .order(:start_datetime)
+      .group_by { |event| event.start_datetime.to_date }
   end
 
   def show

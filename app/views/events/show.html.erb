@@ -1,139 +1,132 @@
-<h1><%= @event.title %></h1>
+<div class="event-show-container">
+  <div class="event-show-card">
 
-<p>
-  <strong>Description:</strong><br>
-  <%= @event.description %>
-</p>
+    <h1><%= @event.title %></h1>
 
-<p>
-  <strong>Start:</strong>
-  <%= @event.start_datetime %>
-</p>
+    <section class="event-section">
+      <h2>Event Details</h2>
 
-<p>
-  <strong>End:</strong>
-  <%= @event.end_datetime %>
-</p>
+      <p>
+        <strong>Description:</strong><br>
+        <%= @event.description %>
+      </p>
 
-<p>
-  <strong>Meeting Point:</strong>
-  <%= @event.meeting_point %>
-</p>
+      <div class="event-detail-grid">
+        <p><strong>Start:</strong><br><%= @event.start_datetime %></p>
+        <p><strong>End:</strong><br><%= @event.end_datetime %></p>
+        <p><strong>Meeting Point:</strong><br><%= @event.meeting_point %></p>
+        <p><strong>Location:</strong><br><%= @event.location %></p>
+        <p><strong>Capacity:</strong><br><%= @event.capacity %></p>
+      </div>
+    </section>
 
-<p>
-  <strong>Location:</strong>
-  <%= @event.location %>
-</p>
+    <section class="event-section">
+      <h2>Registration</h2>
 
-<p>
-  <strong>Capacity:</strong>
-  <%= @event.capacity %>
-</p>
+      <% if session[:user_id] %>
+        <% current_user = User.find_by(id: session[:user_id]) %>
+        <% current_member = current_user&.member %>
 
-<h2>Registration</h2>
+        <% if current_member %>
+          <% registration = @event.event_registrations.find_by(member: current_member) %>
 
-<% if session[:user_id] %>
-  <% current_user = User.find_by(id: session[:user_id]) %>
-  <% current_member = current_user&.member %>
+          <% if registration %>
+            <p class="registration-status">You are registered for this event.</p>
 
-  <% if current_member %>
-    <% registration = @event.event_registrations.find_by(member: current_member) %>
-
-    <% if registration %>
-      <p>You are registered for this event.</p>
-
-      <%= button_to "Cancel Registration",
-          event_registration_path(registration),
-          method: :delete %>
-    <% else %>
-      <%= button_to "Register for Event",
-          event_event_registrations_path(@event),
-          method: :post %>
-    <% end %>
-  <% else %>
-    <p>You need a member profile before registering.</p>
-  <% end %>
-<% else %>
-  <p>
-    <%= link_to "Login to register", login_path %>
-  </p>
-<% end %>
-
-<h2>Assets Available for This Event</h2>
-
-<% if @event.event_assets.any? %>
-  <table border="1">
-    <thead>
-      <tr>
-        <th>Asset</th>
-        <th>Quantity Available</th>
-        <th>Price</th>
-        <% if User.find_by(id: session[:user_id])&.admin? %>
-          <th>Action</th>
-        <% end %>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @event.event_assets.each do |event_asset| %>
-        <tr>
-          <td><%= event_asset.asset.name %></td>
-          <td><%= event_asset.quantity_available %></td>
-          <td>
-            <% if event_asset.price.present? %>
-              $<%= event_asset.price %>
-            <% else %>
-              Free
-            <% end %>
-          </td>
-
-          <% if User.find_by(id: session[:user_id])&.admin? %>
-            <td>
-              <%= button_to "Remove",
-                  event_asset_path(event_asset),
-                  method: :delete %>
-            </td>
+            <%= button_to "Cancel Registration",
+                event_registration_path(registration),
+                method: :delete,
+                class: "danger-button" %>
+          <% else %>
+            <%= button_to "Register for Event",
+                event_event_registrations_path(@event),
+                method: :post,
+                class: "primary-button" %>
           <% end %>
-        </tr>
+        <% else %>
+          <p>You need a member profile before registering.</p>
+        <% end %>
+      <% else %>
+        <%= link_to "Login to register", login_path, class: "primary-link-button" %>
       <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <p>No assets have been added to this event yet.</p>
-<% end %>
+    </section>
 
-<% current_user = User.find_by(id: session[:user_id]) %>
+    <section class="event-section">
+      <h2>Assets Available for This Event</h2>
 
-<% if current_user&.admin? %>
-  <h3>Add Asset to Event</h3>
+      <% current_user = User.find_by(id: session[:user_id]) %>
 
-  <%= form_with url: event_event_assets_path(@event), method: :post, local: true do %>
-    <div>
-      <%= label_tag :asset_id, "Asset" %><br>
-      <%= select_tag :asset_id,
-          options_from_collection_for_select(Asset.order(:name), :id, :name) %>
-    </div>
+      <% if @event.event_assets.any? %>
+        <table class="event-assets-table">
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Quantity Available</th>
+              <th>Price</th>
+              <% if current_user&.admin? %>
+                <th>Action</th>
+              <% end %>
+            </tr>
+          </thead>
 
-    <br>
+          <tbody>
+            <% @event.event_assets.each do |event_asset| %>
+              <tr>
+                <td><%= event_asset.asset.name %></td>
+                <td><%= event_asset.quantity_available %></td>
+                <td>
+                  <% if event_asset.price.present? %>
+                    $<%= event_asset.price %>
+                  <% else %>
+                    Free
+                  <% end %>
+                </td>
 
-    <div>
-      <%= label_tag :quantity_available, "Quantity available for this event" %><br>
-      <%= number_field_tag :quantity_available, nil, min: 0 %>
-    </div>
+                <% if current_user&.admin? %>
+                  <td>
+                    <%= button_to "Remove",
+                        event_asset_path(event_asset),
+                        method: :delete,
+                        class: "small-danger-button" %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No assets have been added to this event yet.</p>
+      <% end %>
+    </section>
 
-    <br>
+    <% if current_user&.admin? %>
+      <section class="event-section admin-event-section">
+        <h2>Add Asset to Event</h2>
 
-    <div>
-      <%= label_tag :price, "Price for this event" %><br>
-      <%= number_field_tag :price, nil, min: 0, step: 0.01 %>
-    </div>
+        <%= form_with url: event_event_assets_path(@event), method: :post, local: true do %>
+          <div class="form-group">
+            <%= label_tag :asset_id, "Asset" %>
+            <%= select_tag :asset_id,
+                options_from_collection_for_select(Asset.order(:name), :id, :name),
+                class: "form-input" %>
+          </div>
 
-    <br>
+          <div class="form-group">
+            <%= label_tag :quantity_available, "Quantity available for this event" %>
+            <%= number_field_tag :quantity_available, nil, min: 0, class: "form-input" %>
+          </div>
 
-    <%= submit_tag "Add Asset" %>
-  <% end %>
-<% end %>
+          <div class="form-group">
+            <%= label_tag :price, "Price for this event" %>
+            <%= number_field_tag :price, nil, min: 0, step: 0.01, class: "form-input" %>
+          </div>
 
-<p>
-  <%= link_to "Back to Events", events_path %>
-</p>
+          <%= submit_tag "Add Asset", class: "primary-button" %>
+        <% end %>
+      </section>
+    <% end %>
+
+    <%= link_to "Back to Events", events_path, class: "back-link" %>
+
+  </div>
+</div>

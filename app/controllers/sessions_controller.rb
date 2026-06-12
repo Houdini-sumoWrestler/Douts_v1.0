@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
 
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to root_path, notice: "Logged in successfully"
+      redirect_to root_path
     else
       flash.now[:alert] = "Invalid email or password"
       render :new, status: :unprocessable_entity
@@ -16,6 +16,6 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to root_path, notice: "Logged out successfully"
+    redirect_to root_path
   end
 end
