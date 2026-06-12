@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_07_023628) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_12_101953) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -57,6 +57,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_07_023628) do
   end
 
   create_table "members", force: :cascade do |t|
+    t.boolean "code_of_conduct_accepted"
     t.datetime "created_at", null: false
     t.string "emergency_contact_name"
     t.string "emergency_contact_number"
@@ -64,9 +65,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_07_023628) do
     t.boolean "has_dive_certification"
     t.date "last_dive_date"
     t.string "last_name"
+    t.string "membership_class"
     t.date "membership_expiry_date"
     t.integer "number_of_dives"
     t.string "phone"
+    t.boolean "terms_accepted"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_members_on_user_id"
