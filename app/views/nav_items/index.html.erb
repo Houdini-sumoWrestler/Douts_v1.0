@@ -1,0 +1,38 @@
+<div class="dashboard-container">
+  <div class="dashboard-card">
+    <h1>Manage Navigation</h1>
+
+    <p>Edit the main navigation bar and dropdown menus.</p>
+
+    <div class="nav-toolbar">
+
+        <%= link_to "Add Top Level Menu",
+            new_nav_item_path,
+            class: "primary-button" %>
+
+        <%= link_to "Add Sub Menu",
+            new_nav_item_path(parent: true),
+            class: "primary-button" %>
+
+    </div>
+    
+    <div class="nav-tree">
+
+        <% @nav_items.each do |item| %>
+
+            <%= render "nav_item",
+                nav_item: item,
+                child: false %>
+
+            <% item.children.ordered.each do |child_item| %>
+
+            <%= render "nav_item",
+                nav_item: child_item,
+                child: true %>
+
+            <% end %>
+
+        <% end %>
+
+    </div>
+</div>

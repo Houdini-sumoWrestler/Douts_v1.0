@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_12_101953) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_15_045704) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -75,6 +75,40 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_12_101953) do
     t.index ["user_id"], name: "index_members_on_user_id"
   end
 
+  create_table "nav_items", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "parent_id"
+    t.integer "position"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.string "url"
+    t.boolean "visible", default: true
+    t.index ["parent_id"], name: "index_nav_items_on_parent_id"
+  end
+
+  create_table "page_sections", force: :cascade do |t|
+    t.string "button_text"
+    t.string "button_url"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.string "image_url"
+    t.bigint "page_id", null: false
+    t.integer "position"
+    t.string "section_key"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.boolean "visible"
+    t.index ["page_id"], name: "index_page_sections_on_page_id"
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "slug"
+    t.string "status"
+    t.string "title"
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email"
@@ -88,4 +122,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_12_101953) do
   add_foreign_key "event_registrations", "events"
   add_foreign_key "event_registrations", "members"
   add_foreign_key "members", "users"
+  add_foreign_key "nav_items", "nav_items", column: "parent_id"
+  add_foreign_key "page_sections", "pages"
 end

@@ -1,0 +1,35 @@
+<%= form_with model: page, local: true do |form| %>
+  <% if page.errors.any? %>
+    <div class="form-errors">
+      <h2><%= pluralize(page.errors.count, "error") %> stopped this page from saving:</h2>
+      <ul>
+        <% page.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :slug %><br>
+    <%= form.text_field :slug %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :status %><br>
+    <%= form.select :status, ["draft", "published", "hidden"] %>
+  </div>
+
+  <br>
+
+  <%= form.submit class: "admin-button" %>
+<% end %>

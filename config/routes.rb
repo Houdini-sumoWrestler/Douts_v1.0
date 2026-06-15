@@ -40,7 +40,13 @@ Rails.application.routes.draw do
     resources :event_assets, only: [:create]
   end
 
-resources :event_assets, only: [:destroy]
+  resources :pages do
+    resources :page_sections, except: [:index, :show]
+  end
+
+  resources :nav_items
+
+  resources :event_assets, only: [:destroy]
 
   get "/admin", to: "admin#dashboard"
 

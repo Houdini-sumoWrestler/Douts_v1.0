@@ -1,0 +1,38 @@
+<% child ||= false %>
+
+<%= turbo_frame_tag dom_id(nav_item) do %>
+  <div class="<%= child ? 'nav-child' : 'nav-parent' %>">
+
+    <div class="nav-row">
+
+      <div class="nav-info">
+        <% if child %>
+          <h4>↳ <%= nav_item.title %></h4>
+        <% else %>
+          <h3><%= nav_item.title %></h3>
+        <% end %>
+
+        <p><%= nav_item.url %></p>
+      </div>
+
+      <div class="nav-actions">
+
+        <%= link_to "Edit",
+            edit_nav_item_path(nav_item),
+            class: "warning-button",
+            data: { turbo_frame: dom_id(nav_item) } %>
+
+        <%= link_to "Delete",
+            nav_item_path(nav_item),
+            class: "danger-button",
+            data: {
+              turbo_method: :delete,
+              turbo_confirm: "Delete this navigation item?"
+            } %>
+
+      </div>
+
+    </div>
+
+  </div>
+<% end %>

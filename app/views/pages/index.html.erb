@@ -1,0 +1,34 @@
+<div class="dashboard-card">
+  <h1>Website Pages</h1>
+
+  <%= link_to "Create New Page", new_page_path, class: "admin-button" %>
+
+  <table class="assets-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Slug</th>
+        <th>Status</th>
+        <th>Sections</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @pages.each do |page| %>
+        <tr>
+          <td><%= page.title %></td>
+          <td><%= page.slug %></td>
+          <td><%= page.status %></td>
+          <td><%= page.page_sections.count %></td>
+          <td>
+            <%= link_to "View", page_path(page) %> |
+            <%= link_to "Edit", edit_page_path(page) %> |
+            <%= link_to "Delete", page_path(page),
+                data: { turbo_method: :delete, turbo_confirm: "Delete this page?" } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

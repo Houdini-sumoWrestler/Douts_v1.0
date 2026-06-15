@@ -1,0 +1,47 @@
+<div class="dashboard-card">
+  <h1><%= @page.title %></h1>
+
+  <p>
+    <strong>Slug:</strong> <%= @page.slug %><br>
+    <strong>Status:</strong> <%= @page.status %>
+  </p>
+
+  <% if current_user&.role == "admin" %>
+    <p>
+      <%= link_to "Edit Page", edit_page_path(@page), class: "admin-button" %>
+      <%= link_to "Add Section", new_page_page_section_path(@page), class: "admin-button" %>
+    </p>
+  <% end %>
+
+  <hr>
+
+  <% @sections.each do |section| %>
+    <section class="cms-section">
+      <h2><%= section.title %></h2>
+
+      <% if section.image_url.present? %>
+        <img src="<%= section.image_url %>" alt="<%= section.title %>" class="cms-section-image">
+      <% end %>
+
+      <div>
+        <%= simple_format(section.content) %>
+      </div>
+
+      <% if section.button_text.present? && section.button_url.present? %>
+        <%= link_to section.button_text, section.button_url, class: "dashboard-button" %>
+      <% end %>
+
+      <% if current_user&.role == "admin" %>
+        <p>
+          <%= link_to "Edit Section", edit_page_page_section_path(@page, section) %> |
+          <%= link_to "Delete Section", page_page_section_path(@page, section),
+              data: { turbo_method: :delete, turbo_confirm: "Delete this section?" } %>
+        </p>
+      <% end %>
+    </section>
+  <% end %>
+
+  <p>
+    <%= link_to "Back to Pages", pages_path %>
+  </p>
+</div>

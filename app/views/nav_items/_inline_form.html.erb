@@ -1,0 +1,32 @@
+<%= form_with model: nav_item do |form| %>
+  <div class="nav-inline-form">
+    <div>
+      <%= form.label :title, "Menu Text" %>
+      <%= form.text_field :title %>
+    </div>
+
+    <div>
+      <%= form.label :url, "URL" %>
+      <%= form.text_field :url %>
+    </div>
+
+    <div>
+      <%= form.label :position %>
+      <%= form.number_field :position %>
+    </div>
+
+    <div class="nav-inline-checkbox">
+      <%= form.label :visible %>
+      <%= form.check_box :visible %>
+    </div>
+
+    <div class="nav-actions">
+      <%= form.submit "Save", class: "primary-button" %>
+
+      <%= link_to "Cancel",
+          nav_items_path,
+          class: "secondary-button",
+          data: { turbo_frame: "_top" } %>
+    </div>
+  </div>
+<% end %>
