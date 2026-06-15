@@ -4,8 +4,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <title>DOUTS Portal</title>
 
+    <title>DOUTS Portal</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <%= csrf_meta_tags %>
@@ -44,55 +44,58 @@
             <% end %>
           </div>
 
-        <div class="nav-links">
-          <% if defined?(NavItem) && @main_nav_items.present? %>
-            <% @main_nav_items.each do |item| %>
-              <% visible_children = item.children.visible.ordered %>
+          <div class="nav-links">
+            <% if defined?(NavItem) && @main_nav_items.present? %>
+              <% @main_nav_items.each do |item| %>
+                <% visible_children = item.children.visible.ordered %>
 
-              <% if visible_children.any? %>
-                <div class="dropdown">
-                  <%= link_to "#{item.title} ▾", item.url.presence || "#" %>
+                <% if visible_children.any? %>
+                  <div class="dropdown">
+                    <%= link_to "#{item.title} ▾", item.url.presence || "#" %>
 
-                  <div class="dropdown-menu">
-                    <% visible_children.each do |child| %>
-                      <%= link_to child.title, child.url.presence || "#" %>
-                    <% end %>
+                    <div class="dropdown-menu">
+                      <% visible_children.each do |child| %>
+                        <%= link_to child.title, child.url.presence || "#" %>
+                      <% end %>
+                    </div>
                   </div>
-                </div>
-              <% else %>
-                <%= link_to item.title, item.url.presence || "#" %>
+                <% else %>
+                  <%= link_to item.title, item.url.presence || "#" %>
+                <% end %>
               <% end %>
+            <% else %>
+              <%= link_to "Home", root_path %>
+              <%= link_to "Events", events_path %>
+              <%= link_to "Membership", register_path %>
             <% end %>
-          <% else %>
-            <%= link_to "Home", root_path %>
-            <%= link_to "Events", events_path %>
-            <%= link_to "Membership", register_path %>
-          <% end %>
 
-          <% if current_user %>
-            <div class="dropdown">
-              <%= link_to "Members ▾", dashboard_path %>
-              <div class="dropdown-menu">
-                <%= link_to "Dashboard", dashboard_path %>
-                <%= link_to "My Events", "#" %>
-                <%= link_to "My Equipment Bookings", "#" %>
-                <%= link_to "My Profile", "#" %>
-              </div>
-            </div>
-          <% end %>
+            <% if current_user %>
+              <div class="dropdown">
+                <%= link_to "Members ▾", dashboard_path %>
 
-          <% if current_user&.admin? %>
-            <div class="dropdown">
-              <%= link_to "Admin ▾", dashboard_path %>
-              <div class="dropdown-menu">
-                <%= link_to "Admin Dashboard", dashboard_path %>
-                <%= link_to "Manage Navigation", nav_items_path if defined?(NavItem) %>
-                <%= link_to "Manage Events", events_path %>
-                <%= link_to "Manage Assets", assets_path %>
-                <%= link_to "Add Asset", new_asset_path %>
+                <div class="dropdown-menu">
+                  <%= link_to "Dashboard", dashboard_path %>
+                  <%= link_to "My Events", "#" %>
+                  <%= link_to "My Equipment Bookings", "#" %>
+                  <%= link_to "My Profile", "#" %>
+                </div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
+
+            <% if current_user&.admin? %>
+              <div class="dropdown">
+                <%= link_to "Admin ▾", dashboard_path %>
+
+                <div class="dropdown-menu">
+                  <%= link_to "Admin Dashboard", dashboard_path %>
+                  <%= link_to "Manage Navigation", nav_items_path if defined?(NavItem) %>
+                  <%= link_to "Manage Events", events_path %>
+                  <%= link_to "Manage Assets", assets_path %>
+                  <%= link_to "Add Asset", new_asset_path %>
+                </div>
+              </div>
+            <% end %>
+          </div>
         </div>
       </nav>
     </header>

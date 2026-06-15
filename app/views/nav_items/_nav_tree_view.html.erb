@@ -1,0 +1,23 @@
+<div class="nav-tree">
+  <% nav_items.each do |item| %>
+    <div class="nav-parent-card">
+      <div class="nav-parent-row">
+        <div class="nav-info">
+          <h3><%= item.title %></h3>
+        </div>
+      </div>
+
+      <% if item.children.ordered.any? %>
+        <div class="nav-children-container">
+          <% item.children.ordered.each do |child_item| %>
+            <div class="nav-child-row">
+              <div class="nav-info">
+                <h4><%= child_item.title %></h4>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

@@ -44,7 +44,16 @@ Rails.application.routes.draw do
     resources :page_sections, except: [:index, :show]
   end
 
-  resources :nav_items
+  resources :nav_items do
+    collection do
+      get :edit_menu
+    end
+
+    member do
+      patch :move_up
+      patch :move_down
+    end
+  end
 
   resources :event_assets, only: [:destroy]
 
