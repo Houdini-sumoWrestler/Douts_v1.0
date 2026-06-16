@@ -1,0 +1,93 @@
+<div class="nav-tree" data-controller="nav-reorder">
+  <% nav_items.each do |item| %>
+    <div class="nav-parent-card" data-nav-reorder-item>
+      <div class="nav-parent-row">
+        <div class="nav-info nav-inline-title">
+          <input type="hidden"
+                 name="nav_items[<%= item.id %>][position]"
+                 value="<%= item.position %>"
+                 class="position-field">
+
+          <input type="text"
+                 name="nav_items[<%= item.id %>][title]"
+                 value="<%= item.title %>"
+                 class="nav-title-input">
+
+          <label class="nav-inline-visible">
+            <input type="hidden"
+                   name="nav_items[<%= item.id %>][visible]"
+                   value="0">
+
+            <input type="checkbox"
+                   name="nav_items[<%= item.id %>][visible]"
+                   value="1"
+                   <%= "checked" if item.visible %>>
+
+            Visible
+          </label>
+        </div>
+
+        <div class="nav-actions">
+          <button type="button"
+                  class="reorder-button"
+                  data-action="click->nav-reorder#moveUp">
+            ↑
+          </button>
+
+          <button type="button"
+                  class="reorder-button"
+                  data-action="click->nav-reorder#moveDown">
+            ↓
+          </button>
+        </div>
+      </div>
+
+      <% if item.children.ordered.any? %>
+        <div class="nav-children-container" data-nav-reorder-group>
+          <% item.children.ordered.each do |child_item| %>
+            <div class="nav-child-row" data-nav-reorder-item>
+              <div class="nav-info nav-inline-title">
+                <input type="hidden"
+                       name="nav_items[<%= child_item.id %>][position]"
+                       value="<%= child_item.position %>"
+                       class="position-field">
+
+                <input type="text"
+                       name="nav_items[<%= child_item.id %>][title]"
+                       value="<%= child_item.title %>"
+                       class="nav-title-input">
+
+                <label class="nav-inline-visible">
+                  <input type="hidden"
+                         name="nav_items[<%= child_item.id %>][visible]"
+                         value="0">
+
+                  <input type="checkbox"
+                         name="nav_items[<%= child_item.id %>][visible]"
+                         value="1"
+                         <%= "checked" if child_item.visible %>>
+
+                  Visible
+                </label>
+              </div>
+
+              <div class="nav-actions">
+                <button type="button"
+                        class="reorder-button"
+                        data-action="click->nav-reorder#moveUp">
+                  ↑
+                </button>
+
+                <button type="button"
+                        class="reorder-button"
+                        data-action="click->nav-reorder#moveDown">
+                  ↓
+                </button>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

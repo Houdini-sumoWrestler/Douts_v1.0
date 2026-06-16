@@ -1048,6 +1048,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 24px;
 }
 
 .nav-parent-row {
@@ -1137,23 +1138,6 @@ body {
   color: var(--grey-hover);
   font-size: 0.9rem;
   font-weight: 500;
-}
-
-.nav-just-moved {
-  animation: moved-highlight 0.45s ease;
-  border-radius: 12px;
-}
-
-@keyframes moved-highlight {
-  0% {
-    box-shadow: 0 0 0 4px rgba(11, 79, 134, 0.2);
-    background-color: var(--light-blue);
-  }
-
-  100% {
-    box-shadow: none;
-    background-color: inherit;
-  }
 }
 
 /* Old nav admin classes kept briefly for compatibility */
@@ -1280,5 +1264,104 @@ body {
 
   .nav-title-input {
     min-width: 0;
+  }
+}
+
+.dashboard-page {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 24px;
+
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 32px;
+}
+
+.dashboard-profile-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: var(--shadow);
+  align-self: start;
+}
+
+.profile-avatar {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 24px;
+
+  border-radius: 50%;
+  background: #d1d5db;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 64px;
+}
+
+.dashboard-profile-card h2 {
+  color: var(--navy);
+  margin-bottom: 20px;
+}
+
+.dashboard-profile-card p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.dashboard-menu-area h1 {
+  margin-top: 0;
+  color: white;
+}
+
+.dashboard-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.dashboard-menu-card {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.16);
+}
+
+.dashboard-menu-card h2 {
+  margin: 0;
+  padding: 18px 22px;
+
+  background: var(--navy);
+  color: white;
+
+  font-size: 18px;
+}
+
+.dashboard-menu-card a {
+  display: block;
+  padding: 16px 22px;
+
+  color: var(--navy);
+  text-decoration: none;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.dashboard-menu-card a:hover {
+  background: #f3f4f6;
+}
+
+.dashboard-menu-card a:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 900px) {
+  .dashboard-page {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-menu-grid {
+    grid-template-columns: 1fr;
   }
 }

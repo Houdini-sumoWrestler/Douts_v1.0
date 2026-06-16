@@ -47,11 +47,7 @@ Rails.application.routes.draw do
   resources :nav_items do
     collection do
       get :edit_menu
-    end
-
-    member do
-      patch :move_up
-      patch :move_down
+      patch :save_menu
     end
   end
 
