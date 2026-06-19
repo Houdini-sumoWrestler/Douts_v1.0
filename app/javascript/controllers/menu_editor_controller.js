@@ -137,7 +137,27 @@ export default class extends Controller {
         <button type="button"
                 class="reorder-button"
                 data-action="click->nav-reorder#moveDown">↓</button>
+
+        <button type="button"
+                class="reorder-button nav-delete-btn"
+                data-action="click->nav-reorder#deleteItem">×</button>
       </div>
     `
+  }
+  deleteItem(event) {
+    const item = event.target.closest("[data-nav-reorder-item]")
+    if (!item) return
+
+    const destroyField = item.querySelector(".destroy-field")
+    const container = item.parentNode
+
+    if (destroyField) {
+      destroyField.value = "1"
+      item.style.display = "none"
+    } else {
+      item.remove()
+    }
+
+    if (container) this.updatePositions(container)
   }
 }

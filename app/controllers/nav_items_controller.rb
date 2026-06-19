@@ -47,7 +47,8 @@ class NavItemsController < ApplicationController
         nav_item.update!(
           title: title,
           visible: visible,
-          position: position
+          position: position,
+          parent_id: parent_id
         )
       end
     end

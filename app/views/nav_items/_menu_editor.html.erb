@@ -1,4 +1,4 @@
-<div class="nav-tree" data-controller="nav-reorder">
+<div class="nav-tree">
   <% nav_items.each do |item| %>
     <div class="nav-parent-card" data-nav-reorder-item>
       <div class="nav-parent-row">
@@ -13,10 +13,27 @@
                  value="<%= item.title %>"
                  class="nav-title-input">
 
+          <select name="nav_items[<%= item.id %>][parent_id]"
+                  class="nav-parent-select">
+            <option value="">Top Level</option>
+
+            <% nav_items.each do |possible_parent| %>
+              <% next if possible_parent.id == item.id %>
+              <option value="<%= possible_parent.id %>">
+                Child of: <%= possible_parent.title %>
+              </option>
+            <% end %>
+          </select>
+
           <label class="nav-inline-visible">
             <input type="hidden"
                    name="nav_items[<%= item.id %>][visible]"
                    value="0">
+
+            <input type="hidden"
+              name="nav_items[<%= item.id %>][_destroy]"
+              value="0"
+              class="destroy-field">
 
             <input type="checkbox"
                    name="nav_items[<%= item.id %>][visible]"
@@ -39,6 +56,12 @@
                   data-action="click->nav-reorder#moveDown">
             ↓
           </button>
+
+          <button type="button"
+              class="reorder-button nav-delete-btn"
+              data-action="click->nav-reorder#deleteItem">
+            ×
+          </button>
         </div>
       </div>
 
@@ -52,10 +75,28 @@
                        value="<%= child_item.position %>"
                        class="position-field">
 
+                <input type="hidden"
+                  name="nav_items[<%= child_item.id %>][_destroy]"
+                  value="0"
+                  class="destroy-field">
+
                 <input type="text"
                        name="nav_items[<%= child_item.id %>][title]"
                        value="<%= child_item.title %>"
                        class="nav-title-input">
+
+                <select name="nav_items[<%= child_item.id %>][parent_id]"
+                        class="nav-parent-select">
+                  <option value="">Top Level</option>
+
+                  <% nav_items.each do |possible_parent| %>
+                    <% next if possible_parent.id == child_item.id %>
+                    <option value="<%= possible_parent.id %>"
+                            <%= "selected" if child_item.parent_id == possible_parent.id %>>
+                      Child of: <%= possible_parent.title %>
+                    </option>
+                  <% end %>
+                </select>
 
                 <label class="nav-inline-visible">
                   <input type="hidden"
@@ -73,16 +114,23 @@
 
               <div class="nav-actions">
                 <button type="button"
-                        class="reorder-button"
-                        data-action="click->nav-reorder#moveUp">
-                  ↑
+                    class="reorder-button"
+                    data-action="click->nav-reorder#moveUp">
+                    ↑
                 </button>
 
                 <button type="button"
-                        class="reorder-button"
-                        data-action="click->nav-reorder#moveDown">
+                    class="reorder-button"
+                    data-action="click->nav-reorder#moveDown">
                   ↓
                 </button>
+
+                <button type="button"
+                    class="reorder-button nav-delete-btn"
+                    data-action="click->nav-reorder#deleteItem">
+                    ×
+                </button>
+
               </div>
             </div>
           <% end %>

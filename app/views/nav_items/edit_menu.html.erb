@@ -6,69 +6,28 @@
       Add, hide, rename, reorder, or delete navigation items.
     </p>
 
-    <div class="nav-toolbar">
+    <%= form_with url: save_menu_nav_items_path,
+                  method: :patch,
+                  local: true,
+                  data: { controller: "nav-reorder" } do %>
+
+      <div class="nav-toolbar">
         <button type="button"
-            class="primary-button"
-            data-action="click->nav-reorder#addTopLevel">
-            Add Top Level Menu
+                class="primary-button"
+                data-action="click->nav-reorder#addTopLevel">
+          Add Menu Item
         </button>
+      </div>
 
-      <%= link_to "Add Sub Menu",
-          new_nav_item_path(parent: true),
-          class: "primary-button" %>
-    </div>
+      <%= render "menu_editor", nav_items: @nav_items %>
 
-    <%= form_with url: save_menu_nav_items_path, method: :patch, local: true do %>
-        <%= render "nav_tree_edit_form", nav_items: @nav_items %>
+      <div class="nav-toolbar">
+        <%= submit_tag "Save Changes", class: "primary-button" %>
 
-        <template id="new-nav-item-template">
-            <div class="nav-child-row" data-nav-reorder-item>
-                <div class="nav-info nav-inline-title">
-                <input type="hidden" data-field="position" class="position-field">
-
-                <input type="hidden" data-field="parent_id">
-
-                <input type="text"
-                        data-field="title"
-                        value=""
-                        placeholder="New menu item"
-                        class="nav-title-input">
-
-                <label class="nav-inline-visible">
-                    <input type="hidden" data-field="visible_hidden" value="0">
-
-                    <input type="checkbox"
-                        data-field="visible"
-                        value="1"
-                        checked>
-
-                    Visible
-                </label>
-                </div>
-
-                <div class="nav-actions">
-                <button type="button"
-                        class="reorder-button"
-                        data-action="click->nav-reorder#moveUp">
-                    ↑
-                </button>
-
-                <button type="button"
-                        class="reorder-button"
-                        data-action="click->nav-reorder#moveDown">
-                    ↓
-                </button>
-                </div>
-            </div>
-            </template>
-
-        <div class="nav-toolbar">
-            <%= submit_tag "Save Changes", class: "primary-button" %>
-
-            <%= link_to "Cancel",
-                nav_items_path,
-                class: "secondary-button" %>
-        </div>
-        <% end %>
+        <%= link_to "Cancel",
+            nav_items_path,
+            class: "secondary-button" %>
+      </div>
+    <% end %>
   </div>
 </div>

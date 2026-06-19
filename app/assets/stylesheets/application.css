@@ -1365,3 +1365,12 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+.nav-delete-btn:hover {
+  background: #b91c1c;
+}
+
+.nav-delete-btn {
+  background: #dc2626;
+  color: white;
+}
